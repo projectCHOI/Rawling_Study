@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 keyword = "넥슨 게임"
 startdate = "2023.09.01"
