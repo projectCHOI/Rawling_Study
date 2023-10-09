@@ -6,4 +6,19 @@ startdate = "2023.09.01"
 enddate = "2023.09.30"
 
 def get_news_list(keyword, startdate, enddate) :
+    li = []
+    h = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'}
+    
+    #기간을 올릴 때 날짜를 하나씩 올린다.
+    for d in pd.date_range(startdate, enddate) :
+        str_d = d.strftime("%Y.%m.%d")
+        page = 1
+        print(str_d)
+        #마지막 페이지를 넘기면 종료 시킴
+        while True:
+            stare = (page-1)*10 + 1
+            print(page)
+            URL = "https://search.naver.com/search.naver?where=news&sm=tab_pge&query={0}&sort=2&photo=0&field=0&pd=3&ds={1}&de={2}&mynews=0&office_type=0&office_section_code=0&news_office_checked=&office_category=0&service_area=0&nso=so:r,p:from{3}to{4},a:all&start={00}".format(keyword, startdate, enddate, startdate.replace(".",""), enddate.replace(".",""), start)
 
+            res = requests.get(URL,headers = h)
+            soup = BeautifulSoup(res.text, "html.parser")
