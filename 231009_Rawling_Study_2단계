@@ -1,0 +1,9 @@
+import requests
+from bs4 import BeautifulSoup
+
+keyword = "넥슨 게임"
+startdate = "2023.09.01"
+enddate = "2023.09.30"
+
+def get_news_list(keyword, startdate, enddate) :
+
