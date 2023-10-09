@@ -8,8 +8,7 @@ enddate = "2023.09.30"
 def get_news_list(keyword, startdate, enddate) :
     li = []
     h = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'}
-    
-    #기간을 올릴 때 날짜를 하나씩 올린다.
+
     for d in pd.date_range(startdate, enddate) :
         str_d = d.strftime("%Y.%m.%d")
         page = 1
@@ -22,3 +21,17 @@ def get_news_list(keyword, startdate, enddate) :
 
             res = requests.get(URL,headers = h)
             soup = BeautifulSoup(res.text, "html.parser")
+
+            if soup.select_one(".api_noresult_wrap") :
+                break
+
+            #마지막을 넘지 않으면 "ul.list_news li" 이것 추출   
+            news_list = soup.select("ul.list_news li")
+            
+            for item in news_list :
+                if len(ietm.select("div.info_group a")) == 2 :
+                    li.append(get_news(item.select("div.info_group a")[1]['href']))
+                #다 수행하면 페이지 하나 넘겨서 또 실행
+                page = page + 1
+            
+    return pd.DataFrame(li, columns=['title', 'date', 'media', 'content', 'URL'])
