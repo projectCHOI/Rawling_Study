@@ -33,8 +33,18 @@ def get_news_list(keyword, startdate, enddate, max_pages=50):
                     content = item.select_one("div.news_dsc").text
                     url = item.select_one("a.news_tit")['href']
                     li.append({'title': title, 'date': date, 'media': media, 'content': content, 'URL': url})
-            page = page + 1
+            page = page + 10
 
     return pd.DataFrame(li, columns=['title', 'date', 'media', 'content', 'URL'])
 
-get_news_list("넥슨 게임", "2023.09.20", "2023.09.20", max_pages=50)  # 페이지 수 제한 추가
+# 사용자 입력 받기
+keyword = input("찾는 keyword를 알려주세요: ")
+startdate = input("시작하는 날을 알려주세요 ex) 2020.12.12: ")
+enddate = input("끝나는 날을 알려주세요 ex) 2020.12.12: ")
+max_pages = int(input("끝나는 페이지는 몇으로 할까요?: "))
+
+# 함수 호출 결과를 변수에 할당
+result = get_news_list(keyword, startdate, enddate, max_pages=max_pages)
+
+ # 크롤링 결과를 CSV 파일로 저장
+result.to_csv('abc.csv', index=False)
