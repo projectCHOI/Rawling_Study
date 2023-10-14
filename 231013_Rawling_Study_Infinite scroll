@@ -1,48 +1,14 @@
 import requests
-from bs4 import BeautifulSoup
 
-#URL가져오기
-res = requests.get('https://www.jungle.co.kr/')
-#싱된 내용을 BeautifulSoup 객체인 bs에 저장
-bs = BeautifulSoup(res.text, 'html.parser')
+#매개 변수를 바꾸어 정의 아래의 코드 값은 전부 0으로 만들어줌
+magazineOffset = 0
+contestOffset = 0
+exhibitOffset = 0
+galleryOffset = 0
 
-#select 객체 호출!
-#bs에서 'ul' 태그의 클래스가 'thumb_list'이고 그 아래에 있는 'li' 태그를 선택
-for data in bs.select('ul.thumb_list li'):
-    #예외처리
-    try:
-        # data에서 span 클레스의 'title' 가져와라
-        print(data.select_one('span.title').text)
-        # data에서 a 클레스의 'thumb_cate' 가져와라
-        print(data.select_one('a.thumb_cate').text)
-    #위 항목이 없으면 패스해라.
-    except:
-        pass
+#변경 전
+#response = requests.get('https://www.jungle.co.kr/recent.json?magazineOffset=23&contestOffset=40&exhibitOffset=3&galleryOffset=0')
+#변경 후
+response = requests.get(f'https://www.jungle.co.kr/recent.json?magazineOffset={magazineOffset}&contestOffset={contestOffset}&exhibitOffset={exhibitOffset}&galleryOffset={galleryOffset}')
 
-#
-#매개 변수를 바꾸어 정의 아래의 코드 값은 전부 0으로 만듦
-params = {
-    'magazineOffset':0,
-    'contestOffset':0,
-    'exhibitOffset':0,
-    'galleryOffset':0
-}
-
-
-#반복하는 루프 range(횟수)
-for i in range(5):
-    #처음 res을 GET 요청, params매개 변수
-    res = requests.get('https://www.jungle.co.kr/recent.json', params=params)
-
-    #moreList이건 리스트 반복
-    #params 매개변수 호출한 res.json에서 title, targetCode 출력
-    for data in res.json()['moreList']:
-        print(data['title'])
-        print(data['targetCode'])
-    params['magazineOffset'] = res.json()['magazineOffset']
-    params['contestOffset'] = res.json()['contestOffset']
-    params['exhibitOffset'] = res.json()['exhibitOffset']
-    params['galleryOffset'] = res.json()['galleryOffset']
-
-#추가예정
-#print(params)
+print(response.json())
