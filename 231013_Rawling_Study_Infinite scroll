@@ -13,7 +13,12 @@ galleryOffset = 0
 #변경 후
 response = requests.get(f'https://www.jungle.co.kr/recent.json?magazineOffset={magazineOffset}&contestOffset={contestOffset}&exhibitOffset={exhibitOffset}&galleryOffset={galleryOffset}')
 
-
 for item in response.json()['moreList']:
-    print(item['title']) #타이틀
-    print(item['targetCode']) #타겟코드
+    
+    main_list.append(
+        {
+            'title' : item['title'],
+            'targetCode' : item['targetCode']
+
+        }
+    )
