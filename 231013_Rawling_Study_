@@ -19,6 +19,7 @@ for data in bs.select('ul.thumb_list li'):
     except:
         pass
 
+
 #매개 변수를 바꾸어 정의 아래의 코드 값은 전부 0으로 만듦
 params = {
     'magazineOffset':0,
@@ -26,6 +27,7 @@ params = {
     'exhibitOffset':0,
     'galleryOffset':0
 }
+
 
 #반복하는 루프 range(횟수)
 for i in range(5):
