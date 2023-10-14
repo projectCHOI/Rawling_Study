@@ -1,5 +1,7 @@
 import requests
 
+main_list = []
+
 #매개 변수를 바꾸어 정의 아래의 코드 값은 전부 0으로 만들어줌
 magazineOffset = 0
 contestOffset = 0
@@ -11,4 +13,7 @@ galleryOffset = 0
 #변경 후
 response = requests.get(f'https://www.jungle.co.kr/recent.json?magazineOffset={magazineOffset}&contestOffset={contestOffset}&exhibitOffset={exhibitOffset}&galleryOffset={galleryOffset}')
 
-print(response.json())
+
+for item in response.json()['moreList']:
+    print(item['title']) #타이틀
+    print(item['targetCode']) #타겟코드
