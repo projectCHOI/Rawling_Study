@@ -1,3 +1,5 @@
+# 웹사이트의 창을 내렸을 때 생기는 데이터 크롤링
+
 import requests
 #import json #json을 추가 한다면 사용
 main_list = []

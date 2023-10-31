@@ -1,3 +1,4 @@
+# 뉴스 데이터 가져오기 3단계
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup

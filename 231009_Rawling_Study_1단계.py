@@ -1,3 +1,4 @@
+# 뉴스 데이터 가져오기 1단계
 import requests
 from bs4 import BeautifulSoup
 
