@@ -1,8 +1,11 @@
-#랜덤하게 정해진 텍스트와 1~9의 숫자 중 6개를 5회 반복 추출
+import random
+
 def generate_numbers():
     return random.sample(range(1, 9), 6)
 
-items = ['1조', '2조', '3조', '4조', '5조']
+# 사용자로부터 items 값을 입력받아 리스트로 변환
+items_input = input("시도할 조 이름은?(다중선택 가능, 띄어쓰기로 구분) : ")
+items = items_input.split() if items_input else ['1조', '2조', '3조', '4조', '5조']
 
 for _ in range(5):
     random_item = random.choice(items)
