@@ -1,4 +1,4 @@
-#랜덤하게 정해진 텍스와 1~9의 숫자 중 6개를 5회 반복 추출
+#랜덤하게 정해진 텍스트와 1~9의 숫자 중 6개를 5회 반복 추출
 def generate_numbers():
     return random.sample(range(1, 9), 6)
 
