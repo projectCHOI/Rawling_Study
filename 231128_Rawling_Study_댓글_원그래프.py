@@ -3,8 +3,9 @@
 import matplotlib.pyplot as plt
 
 # '성향' 열의 값으로 원 그래프 생성
-attitude_counts = df['성향'].value_counts()
-plt.figure(figsize=(8, 8))
-plt.pie(attitude_counts, labels=attitude_counts.index, autopct='%1.1f%%', startangle=140)
-plt.title('댓글 성향 분포')
+plt.figure(figsize=(4, 4)) #크기
+plt.pie(attitude_counts, labels=attitude_counts.index, autopct=lambda p: f'{p:.1f}%', #비율 표시 스타일
+        startangle=140, colors=['yellow'], textprops={'weight': 'bold'}) #색상
+plt.title('Kakao-game') #제목
 plt.show()
+
