@@ -4,7 +4,6 @@ import pandas as pd
 import time
 import random
 
-# 개별 뉴스 크롤링
 def get_news(URL) :
     response = requests.get(URL)
     soup = BeautifulSoup(response.text, "html.parser")
