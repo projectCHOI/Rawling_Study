@@ -1,11 +1,13 @@
 import random
 
-def generate_numbers_with_duplicates(required_numbers, exclude_numbers):
-    available_numbers = [num for num in range(1, 9) if num not in exclude_numbers]
+def generate_numbers_with_limited_duplicates(required_numbers, exclude_numbers):
+    available_numbers = [num for num in range(0, 10) if num not in exclude_numbers]
     numbers = required_numbers.copy()
     
     while len(numbers) < 6:
-        numbers.append(random.choice(available_numbers))
+        number = random.choice(available_numbers)
+        if numbers.count(number) < 2:
+            numbers.append(number)
     
     return numbers
 
