@@ -1,46 +1,34 @@
+#!pip install pandas matplotlib
+
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
-from sklearn.linear_model import LinearRegression
-from matplotlib.dates import DateFormatter
-import matplotlib.dates as mdates
 
-# 가상의 데이터 생성을 위한 날짜 범위 설정
-dates = pd.date_range(start="2020-01-01", end="2020-12-31", freq='D')
+# 데이터 파일 불러오기
+dataA = pd.read_csv('경로/데이터A.csv')
+dataB = pd.read_csv('경로/데이터B.csv')
 
-# 가상의 데이터 생성 (데이터A와 데이터B)
-np.random.seed(0)
-dataA = pd.DataFrame({
-    'date': dates,
-    'volume': np.random.randint(100, 1000000, len(dates))
-})
-dataB = pd.DataFrame({
-    'date': dates,
-    'volume': np.random.randint(100, 1000000, len(dates))
-})
+# 날짜 형식을 datetime으로 변환 (필요한 경우)
+dataA['날짜'] = pd.to_datetime(dataA['날짜'])
+dataB['날짜'] = pd.to_datetime(dataB['날짜'])
 
-# 날짜 데이터를 pandas의 datetime 형식으로 변환
-dataA['date'] = pd.to_datetime(dataA['date'])
-dataB['date'] = pd.to_datetime(dataB['date'])
-
-# 선형 회귀 모델을 사용하여 추세선 계산
-modelA = LinearRegression()
-modelB = LinearRegression()
-
-# 날짜 데이터를 수치형으로 변환
-dataA['date_num'] = dataA['date'].map(mdates.date2num)
-dataB['date_num'] = dataB['date'].map(mdates.date2num)
-
-# 선형 회귀 모델 학습
-modelA.fit(dataA[['date_num']], dataA['volume'])
-modelB.fit(dataB[['date_num']], dataB['volume'])
-
-# 추세선을 위한 예측값 계산
-dataA['trend'] = modelA.predict(dataA[['date_num']])
-dataB['trend'] = modelB.predict(dataB[['date_num']])
+# 데이터 정렬
+dataA = dataA.sort_values(by='날짜')
+dataB = dataB.sort_values(by='날짜')
 
 # 그래프 그리기
-plt.figure(figsize=(12, 6))
-plt.scatter(dataA['date'], dataA['volume'], color='blue', s=10, alpha=0.5)
-plt.scatter(dataB['date'], dataB['volume'], color='green', s=10, alpha=0.5)
-plt.plot(dataA['date'], dataA['trend'], color='blue', linewidth
+plt.figure(figsize=(10, 6))
+
+plt.plot(dataA['날짜'], dataA['거래량'], color='blue', label='데이터A')
+plt.plot(dataB['날짜'], dataB['거래량'], color='green', label='데이터B')
+
+# Y축 범위 설정
+plt.ylim(100, 1000000)
+
+# 레이블 및 제목 추가
+plt.xlabel('날짜')
+plt.ylabel('거래량')
+plt.title('데이터A와 데이터B의 거래량 추세')
+plt.legend()
+
+# 그래프 표시
+plt.show()
