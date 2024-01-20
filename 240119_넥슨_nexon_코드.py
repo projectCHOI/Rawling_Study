@@ -1,30 +1,31 @@
-import pandas as pd
-import matplotlib.pyplot as plt
+# 주식 가격 백분률 계산.
+data['Price_Change_Percentage'] = data['Stock_Price_Open'].pct_change() * 100
 
-# CSV 파일 읽기
-df = pd.read_csv('path_to_your_file.csv')  # 'path_to_your_file.csv'를 파일의 경로로 대체하세요
+# 그림과 서브플롯(subplots) 세트 작성
+fig, ax1 = plt.subplots(figsize=(15, 8))
 
-# 'Stock_Price_Open'과 'Stock_Volume'의 쉼표 제거 및 정수형으로 변환
-df['Stock_Price_Open'] = df['Stock_Price_Open'].str.replace(',', '').astype(int)
-df['Stock_Volume'] = df['Stock_Volume'].str.replace(',', '').astype(int)
+# 주식 시가 데이터
+ax1.set_xlabel('Date')
+ax1.set_ylabel('Stock Price Open', color='red')
+ax1.plot(data['date'], data['Stock_Price_Open'], color='red', label='Stock Price Open')
+ax1.tick_params(axis='y', labelcolor='red')
 
-# 'date'를 datetime 객체로 변환
-df['date'] = pd.to_datetime(df['date'])
+# 3%이상 변화를 별표 마커로 표시
+significant_increase = data['Price_Change_Percentage'] >= 3
+significant_decrease = data['Price_Change_Percentage'] <= -3
+ax1.scatter(data['date'][significant_increase], data['Stock_Price_Open'][significant_increase], color='red', marker='*', s=100, label='>3% Increase')
+ax1.scatter(data['date'][significant_decrease], data['Stock_Price_Open'][significant_decrease], color='blue', marker='*', s=100, label='>3% Decrease')
 
-# 시각화
-plt.figure(figsize=(10, 6))
+# 거래량을 표기하기 위한 y축을 생성
+ax2 = ax1.twinx()
+ax2.set_ylabel('Stock Volume', color='black')
+ax2.bar(data['date'], data['Stock_Volume'], color='black', label='Stock Volume')
+ax2.tick_params(axis='y', labelcolor='black')
 
-# 꺽은선 그래프 (Stock_Price_Open)
-plt.plot(df['date'], df['Stock_Price_Open'], label='Stock Price Open', color='blue')
+# 범례를 추가
+ax1.legend(loc='upper left')
+ax2.legend(loc='upper right')
 
-# 막대 그래프 (Stock_Volume)
-plt.bar(df['date'], df['Stock_Volume'], label='Stock Volume', color='orange', alpha=0.5)
-
-# 레이블, 제목, 범례 추가
-plt.xlabel('Date')
-plt.ylabel('Value')
-plt.title('Nexon Stock Price and Volume')
-plt.legend()
-
-# 그래프 표시
+# 표시
+plt.title('Nexon Stock Price and Volume with Significant Changes Marked')
 plt.show()
