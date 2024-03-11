@@ -4,43 +4,95 @@ import torch.optim as optim
 import matplotlib.pyplot as plt
 from torchvision import datasets, models, transforms
 from torch.utils.data import DataLoader
-import os
-import shutil
 
-# Set device for PyTorch
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# Define paths for training and validation datasets
-TRAIN_DATA_PATH = "train"
-VALIDATION_DATA_PATH = "validation"
+import os
 
-# Ensure dataset directories exist (you should modify this according to your local setup)
-# For example, if your datasets are not already organized, you should manually set them up or write code to do so
-assert os.path.exists(TRAIN_DATA_PATH), f"Training data folder {TRAIN_DATA_PATH} does not exist."
-assert os.path.exists(VALIDATION_DATA_PATH), f"Validation data folder {VALIDATION_DATA_PATH} does not exist."
+os.environ['KAGGLE_USERNAME'] = 'yoonsuk93choi' # username
+os.environ['KAGGLE_KEY'] = '359365bf6e538ea03289da614cdec80a' # key
 
-# Data transformations
+# !kaggle datasets download -d thedagger/pokemon-generation-one
+# !unzip -q pokemon-generation-one.zip
+
+# !kaggle datasets download -d hlrhegemony/pokemon-image-dataset
+# !unzip -q pokemon-image-dataset.zip
+
+# # 디렉토리 이름 변경
+# !mv dataset train
+
+# !mv images validation
+
+# # 중복된 dataset 디렉토리 삭제
+# !rm -rf train/dataset
+
+import os
+print(os.listdir())  # 현재 디렉토리의 파일 목록을 출력합니다.
+
+train_labels = os.listdir('train')
+len(train_labels)
+
+val_labels = os.listdir('validation')
+len(val_labels)
+
+import shutil
+
+for val_label in val_labels:
+    if val_label not in train_labels:
+        shutil.rmtree(os.path.join('validation', val_label))
+
+val_labels = os.listdir('validation')
+len(val_labels)
+
+for train_label in train_labels:
+    if train_label not in val_labels:
+        print(train_label)
+        os.makedirs(os.path.join('validation', train_label), exist_ok=True)
+
+val_labels = os.listdir('validation')
+print(len(val_labels))
+
+# 데이터 변환 및 데이터셋 및 DataLoader 생성
 data_transforms = {
     'train': transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.RandomAffine(0, shear=10, scale=(0.8, 1.2)),
         transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
+        transforms.ToTensor()
     ]),
     'validation': transforms.Compose([
         transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-    ]),
+        transforms.ToTensor()
+    ])
 }
 
-# Image datasets
 image_datasets = {
-    'train': datasets.ImageFolder(TRAIN_DATA_PATH, data_transforms['train']),
-    'validation': datasets.ImageFolder(VALIDATION_DATA_PATH, data_transforms['validation']),
+    'train': datasets.ImageFolder('train', data_transforms['train']),
+    'validation': datasets.ImageFolder('validation', data_transforms['validation'])
 }
 
-# Data loaders
 dataloaders = {
-    'train': DataLoader(image_datasets['train'], batch_size=32, shuffle=True),
-    'validation': DataLoader(image_datasets['validation'], batch_size=32, shuffle=False),
+    'train': DataLoader(
+        image_datasets['train'],
+        batch_size=32,
+        shuffle=True
+    ),
+    'validation': DataLoader(
+        image_datasets['validation'],
+        batch_size=32,
+        shuffle=False
+    )
 }
+
+imgs, labels = next(iter(dataloaders['train']))
+
+fig, axes = plt.subplots(4, 8, figsize=(20, 10))
+
+for img, label, ax in zip(imgs, labels, axes.flatten()):
+    ax.set_title(label.item())
+    ax.imshow(img.permute(1, 2, 0))
+    ax.axis('off')
+
+# 클래스 이름 확인하기
+print(image_datasets['train'].classes)
+print(image_datasets['train'].classes[0])

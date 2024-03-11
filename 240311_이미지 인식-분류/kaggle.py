@@ -13,7 +13,7 @@ os.environ['KAGGLE_USERNAME'] = 'yoonsuk93choi' # username
 os.environ['KAGGLE_KEY'] = '359365bf6e538ea03289da614cdec80a' # key
 
 # 데이터셋 다운로드
-!pip install kaggle
+# !pip install kaggle
 import kaggle
 
 # pokemon-generation-one 데이터셋 다운로드 및 압축 해제
