@@ -1,8 +1,9 @@
 import FinanceDataReader as fdr
 import datetime
+# -*- coding: utf-8 -*-
 
 date = datetime.datetime(2022, 1, 1)
-code = '종목코드'  # 예시 종목 코드
+code = '005930'  # 예시 종목 코드
 
 if code and date:
     df = fdr.DataReader(code, date)
@@ -24,3 +25,5 @@ if code and date:
     - Volumn: 거래량
     '''
     print(column_description)
+    print(df.columns)
+
