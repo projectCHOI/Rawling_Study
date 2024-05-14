@@ -1,12 +1,23 @@
 # ChatGPT-4o
 
 ## ChatGPT-4o란?
+- ChatGPT-4o"에서 "o"는 "turbo"의 줄임말로, "ChatGPT-4 Turbo"를 의미
+- 더 빠른 응답 속도와 더 많은 입력 컨텍스트를 처리할 수 있는 능력
+- "turbo"의 속도와 효율성을 강조
 
 ### 특성
+- 속도와 효율성 : GPT-4 Turbo는 기존 GPT-4 모델보다 빠른 응답 속도 능력으로 효율적인 처리 가능
+- 대용량 데이터 처리 : 최대 128K 토큰의 긴 문서나 대량의 데이터를 한 번에 처리 가능
 
 ## ChatGPT-4와 ChatGPT-4o의 공통점
+- ChatGPT-4와 ChatGPT-4-turbo 모두 텍스트 생성에 특화된 언어 모델
+1. 고도화된 자연어 처리 능력
+2. 텍스트와 이미지 다양한 입력 형식 지원
+3. 학습 데이터 기반
 
 ## ChatGPT-4와 ChatGPT-4o의 차이점
+1. 특정 최적화 : ChatGPT-4-turbo는 특정 최적화가 적용되어 더욱 효율적으로 동작
+2. OpenAI API 사용 : ChatGPT-4-turbo는 OpenAI API를 통해 제공되며, 일반적으로 동일한 API 엔드포인트를 통해 접근
 
 ## ChatGPT-4의 강점
 
