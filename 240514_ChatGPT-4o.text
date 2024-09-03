@@ -40,6 +40,8 @@
 1. 속도 : ChatGPT-4-turbo를 사용하여 DALL-E와 같은 이미지 생성 모델을 호출하면 더 빠른 결과 출력.
 2. 세부 사항 및 품질 : 복잡한 이미지를 생성할 때, 특히 높은 정확도와 세부 사항을 요구하는 경우, 두 모델 모두 DALL-E와의 통합을 통해 유사한 품질의 이미지를 출력
 
+Git connection verification
+
 ## 활용도 결론
 1. 실시간 상호작용 : ChatGPT-4-turbo
 2. 복잡한 문제 해결 : ChatGPT-4
